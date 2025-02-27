@@ -1,4 +1,4 @@
-export type ApiResponse<T> = {
+export type Pagination<T> = {
     value: {
         pageIndex: number;
         pageSize: number;
