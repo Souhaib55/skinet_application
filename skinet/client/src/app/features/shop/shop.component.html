@@ -1,69 +1,74 @@
-<div class="felx flex-col gap-3">
-    <div class="flex justify-between">
-        <mat-paginator
-            class="bg-white"
-            (page)="handlePageEvent($event)"
-            [length] ="products?.value?.count"
-            [pageSize] ="shopParams.pageSize"
-            [showFirstLastButtons]="true"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="shopParams.pageNumber - 1"
-            aria-label = "Select page"
-        >
-        </mat-paginator>
-
-        <form 
-            #searchForm="ngForm"
-            (ngSubmit)="onSearchChange()"
-            class="relative flex items-center w-full max-w-md mx-4 rounded-2xl"
-        >
-            <input type="search"
-                rounded-md
-                class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg"
-                placeholder="Search"
-                name="search"
-                [(ngModel)]="shopParams.search"
-            
-            />
-            <button mat-icon-button type="submit"
-                class="absolute   inset-y-0 right-8 top_2 flex items-center pl-3 "
-                >
-                <mat-icon>search</mat-icon>
-            </button>
-        </form>
-
-        <div class="flex gap-3">
-            <button class="match-input-height" mat-stroked-button (click)="openFiltersDialog()">
-                <mat-icon>filter_list</mat-icon>
-                Filters
-            </button>
+@if (products){
+    <div class="felx flex-col gap-3">
+        <div class="flex justify-between">
+            <mat-paginator
+                class="bg-white"
+                (page)="handlePageEvent($event)"
+                [length] ="products.value.count"
+                [pageSize] ="shopParams.pageSize"
+                [showFirstLastButtons]="true"
+                [pageSizeOptions]="pageSizeOptions"
+                [pageIndex]="shopParams.pageNumber - 1"
+                aria-label = "Select page"
+            >
+            </mat-paginator>
     
-            <button class="match-input-height mr-5" mat-stroked-button [matMenuTriggerFor]="sortMenu">
-                <mat-icon>swap_vert</mat-icon>
-                Sort
-            </button>
+            <form 
+                #searchForm="ngForm"
+                (ngSubmit)="onSearchChange()"
+                class="relative flex items-center w-full max-w-md mx-4 rounded-2xl"
+            >
+                <input type="search"
+                    rounded-md
+                    class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg"
+                    placeholder="Search"
+                    name="search"
+                    [(ngModel)]="shopParams.search"
+                
+                />
+                <button mat-icon-button type="submit"
+                    class="absolute   inset-y-0 right-8 top_2 flex items-center pl-3 "
+                    >
+                    <mat-icon>search</mat-icon>
+                </button>
+            </form>
+    
+            <div class="flex gap-3">
+                <button class="match-input-height" mat-stroked-button (click)="openFiltersDialog()">
+                    <mat-icon>filter_list</mat-icon>
+                    Filters
+                </button>
+        
+                <button class="match-input-height mr-5" mat-stroked-button [matMenuTriggerFor]="sortMenu">
+                    <mat-icon>swap_vert</mat-icon>
+                    Sort
+                </button>
+            </div>
+    
+    
         </div>
-
-
-    </div>
-
-    <div class="grid grid-cols-5 gap-4 mt-2">
-        <ng-container *ngFor="let product of products?.value?.data; trackBy: trackByProductId">
-            <app-product-item [product]="product"></app-product-item>
-        </ng-container>
+    
+        <div class="grid grid-cols-5 gap-4 mt-2">
+            <ng-container *ngFor="let product of products.value.data; trackBy: trackByProductId">
+                <app-product-item [product]="product"></app-product-item>
+            </ng-container>
+        
+        </div>
     
     </div>
-
-</div>
-
-<mat-menu #sortMenu="matMenu">
-    <mat-selection-list [multiple]="false" (selectionChange)="onSortChange($event)">
-        @for (sort of sortOptions; track $index) {
-            <mat-list-option [value]="sort.value" [selected]="shopParams.sort === sort.value"> 
-                {{ sort.name }}
-            </mat-list-option>
-        }
-    </mat-selection-list>
-    </mat-menu>
     
+    <mat-menu #sortMenu="matMenu">
+        <mat-selection-list [multiple]="false" (selectionChange)="onSortChange($event)">
+            @for (sort of sortOptions; track $index) {
+                <mat-list-option [value]="sort.value" [selected]="shopParams.sort === sort.value"> 
+                    {{ sort.name }}
+                </mat-list-option>
+            }
+        </mat-selection-list>
+        </mat-menu>
+        
+
+}
+
+
 
